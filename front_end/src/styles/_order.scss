@@ -1,0 +1,96 @@
+@use 'variables' as *;
+
+.container--narrow {
+  max-width: 760px;
+}
+
+.muted {
+  color: $muted;
+}
+
+.filter {
+  padding: 8px 12px;
+  border: 1px solid $border;
+  border-radius: $radius;
+  font-size: 14px;
+  background: #fff;
+}
+
+.checkout__method {
+  margin: 0;
+  color: $muted;
+  font-size: 14px;
+}
+
+.order-info {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+
+  div {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+  }
+
+  span:first-child {
+    color: $muted;
+  }
+}
+
+.order-items {
+  border-top: 1px solid $border;
+  padding-top: 12px;
+}
+
+.order-item {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+
+  &__img .thumb {
+    border-radius: 8px;
+    font-size: 20px;
+  }
+
+  &__name {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+
+    small {
+      color: $muted;
+    }
+  }
+}
+
+// Màu badge theo trạng thái đơn
+.badge {
+  &--pending {
+    background: rgba(217, 119, 6, 0.12);
+    color: #b45309;
+  }
+
+  &--confirmed {
+    background: rgba(37, 99, 235, 0.12);
+    color: #1d4ed8;
+  }
+
+  &--shipping {
+    background: rgba($primary, 0.12);
+    color: $primary;
+  }
+
+  &--completed {
+    background: rgba(22, 163, 74, 0.12);
+    color: #15803d;
+  }
+
+  &--cancelled {
+    background: rgba($danger, 0.1);
+    color: $danger;
+  }
+}

@@ -1,0 +1,151 @@
+@use 'variables' as *;
+
+.navbar__cart {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-count {
+  min-width: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: $primary;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 20px;
+  text-align: center;
+}
+
+.cart {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  align-items: start;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__summary {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 18px;
+    }
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: $muted;
+
+    &--total {
+      color: $text;
+      font-size: 18px;
+      font-weight: 700;
+      padding-top: 12px;
+      margin-bottom: 16px;
+      border-top: 1px solid $border;
+    }
+  }
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 80px 1fr auto 120px auto;
+  gap: 16px;
+  align-items: center;
+  background: #fff;
+  border-radius: 14px;
+  padding: 12px 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+  @media (max-width: 640px) {
+    grid-template-columns: 64px 1fr;
+  }
+
+  &__img {
+    display: block;
+
+    .thumb {
+      border-radius: 10px;
+      font-size: 28px;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    a {
+      color: $text;
+    }
+  }
+
+  &__subtotal {
+    font-weight: 700;
+    text-align: right;
+  }
+
+  &__warn {
+    color: $danger;
+    font-size: 13px;
+  }
+}
+
+.qty {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid $border;
+  border-radius: $radius;
+  overflow: hidden;
+
+  button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: #f9fafb;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      background: $border;
+    }
+
+    &:disabled {
+      color: #d1d5db;
+      cursor: not-allowed;
+    }
+  }
+
+  span {
+    min-width: 36px;
+    text-align: center;
+  }
+}
+
+.add-to-cart {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.alert--success {
+  background: rgba(22, 163, 74, 0.1);
+  color: #15803d;
+}
