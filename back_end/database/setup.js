@@ -11,6 +11,11 @@ const { DATABASE_URL, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME } = proces
 const conn = { host: DB_HOST, port: DB_PORT, user: DB_USER, password: DB_PASSWORD };
 
 async function main() {
+  // Báo rõ biến thiếu thay vì lỗi kết nối khó hiểu (thường gặp khi deploy quên đặt Variables)
+  const missing = ['ADMIN_EMAIL', 'ADMIN_PASSWORD', 'ADMIN_NAME'].filter((k) => !process.env[k]);
+  if (!DATABASE_URL && !DB_HOST) missing.unshift('DATABASE_URL (hoặc DB_HOST, DB_USER...)');
+  if (missing.length) throw new Error(`Thiếu biến môi trường: ${missing.join(', ')}`);
+
   // 1. Tạo database nếu chưa tồn tại (chỉ khi chạy local; trên cloud database đã có sẵn trong DATABASE_URL)
   if (!DATABASE_URL) {
     const admin = new Client({ ...conn, database: 'postgres' });
@@ -44,6 +49,8 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error('Setup thất bại:', err.message);
+  // Lỗi kết nối có thể là AggregateError với message rỗng, nên in thêm code và các lỗi con
+  console.error('Setup thất bại:', err.message || err.code || err);
+  err.errors?.forEach((e) => console.error('  -', e.code, e.message));
   process.exit(1);
 });
