@@ -10,6 +10,21 @@ require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 const { DATABASE_URL, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME } = process.env;
 const conn = { host: DB_HOST, port: DB_PORT, user: DB_USER, password: DB_PASSWORD };
 
+// Kết nối có thử lại: khi deploy, mạng nội bộ hoặc Postgres có thể chưa sẵn sàng trong vài giây đầu
+async function connect(config, attempts = 10) {
+  for (let i = 1; ; i++) {
+    const client = new Client(config); // client đã connect lỗi thì không dùng lại được, phải tạo mới
+    try {
+      await client.connect();
+      return client;
+    } catch (err) {
+      if (i >= attempts) throw err;
+      console.log(`Chưa kết nối được database (${err.code || err.message}), thử lại ${i + 1}/${attempts} sau 3 giây...`);
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+    }
+  }
+}
+
 async function main() {
   // Báo rõ biến thiếu thay vì lỗi kết nối khó hiểu (thường gặp khi deploy quên đặt Variables)
   const missing = ['ADMIN_EMAIL', 'ADMIN_PASSWORD', 'ADMIN_NAME'].filter((k) => !process.env[k]);
@@ -18,8 +33,7 @@ async function main() {
 
   // 1. Tạo database nếu chưa tồn tại (chỉ khi chạy local; trên cloud database đã có sẵn trong DATABASE_URL)
   if (!DATABASE_URL) {
-    const admin = new Client({ ...conn, database: 'postgres' });
-    await admin.connect();
+    const admin = await connect({ ...conn, database: 'postgres' });
     const { rowCount } = await admin.query('SELECT 1 FROM pg_database WHERE datname = $1', [DB_NAME]);
     if (!rowCount) {
       await admin.query(`CREATE DATABASE "${DB_NAME}"`);
@@ -31,8 +45,7 @@ async function main() {
   }
 
   // 2. Tạo bảng
-  const db = new Client(DATABASE_URL ? { connectionString: DATABASE_URL } : { ...conn, database: DB_NAME });
-  await db.connect();
+  const db = await connect(DATABASE_URL ? { connectionString: DATABASE_URL } : { ...conn, database: DB_NAME });
   await db.query(fs.readFileSync(path.join(__dirname, 'schema.sql'), 'utf8'));
   console.log('Đã tạo các bảng');
 
