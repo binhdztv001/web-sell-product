@@ -5,26 +5,21 @@ Front-end **ReactJS**, back-end **Node.js/Express** (RESTful API), cơ sở dữ
 
 🔗 **Demo:** https://attractive-mercy-production-9d54.up.railway.app
 
-<!--
-Tài khoản demo (bỏ comment sau khi tạo tài khoản user thường trên bản demo):
+**Tài khoản demo:**
 
 | Vai trò | Email | Mật khẩu |
 |---|---|---|
-| Khách hàng | demo@example.com | ... |
--->
+| Khách hàng | demo@example.com | 123456 |
 
-<!--
-## Ảnh chụp màn hình
-(Chụp ảnh, lưu vào thư mục docs/screenshots/ rồi bỏ comment phần này)
+## 📸 Ảnh chụp màn hình
 
-| Trang chủ | Giỏ hàng & thanh toán |
+| Trang chủ | Đặt hàng thành công |
 |---|---|
-| ![Trang chủ](docs/screenshots/home.png) | ![Thanh toán](docs/screenshots/checkout.png) |
+| ![Trang chủ](docs/screenshots/home.png) | ![Đặt hàng thành công](docs/screenshots/check-out.png) |
 
-| Quản lý sản phẩm (upload ảnh) | Quản lý đơn hàng |
+| Quản lý sản phẩm | Quản lý đơn hàng |
 |---|---|
 | ![Admin sản phẩm](docs/screenshots/admin-products.png) | ![Admin đơn hàng](docs/screenshots/admin-orders.png) |
--->
 
 ## ✨ Tính năng
 
